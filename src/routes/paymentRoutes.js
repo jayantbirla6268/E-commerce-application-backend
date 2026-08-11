@@ -7,7 +7,7 @@ const authmiddleware=require("../middlerware/authMiddleware")
 const {
     createPayment,
     verifyPayment
-} = require("../controllers/paymentController");
+} = require("../controllers/paymentcontroller");
 
 
 paymentRouter.post("/createPayment/:id",authmiddleware,createPayment);
