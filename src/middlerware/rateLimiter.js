@@ -4,7 +4,7 @@ const loginLimiter = rateLimit({
 
     windowMs: 15 * 60 * 1000,
 
-    max: 5,
+    max: 10,
 
     message: {
 

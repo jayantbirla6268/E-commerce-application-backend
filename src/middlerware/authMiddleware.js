@@ -15,7 +15,7 @@ const authmiddleware = async (req, res, next) => {
             });
         }
 
-        const decoded = jwt.verify(token, "jay@12345");
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
            const{_id}=decoded;//extracting id from decode message
         const user = await User.findById(decoded.id);
 

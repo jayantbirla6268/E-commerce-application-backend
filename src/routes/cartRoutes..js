@@ -2,12 +2,12 @@
 const express=require ("express");
 const {addToCart,getCart,updateCart,removeFromCart}=require("../controllers/cartcontroller");
 const cartRouter=express.Router();
-const  authMiddleware=require("../middlerware/authMiddleware")
+const  authmiddleware=require("../middlerware/authMiddleware")
 
- cartRouter.post("/addToCart",authMiddleware, addToCart);
- cartRouter.get("/getCart",authMiddleware,getCart);
- cartRouter.put("/updateCart/:id",authMiddleware,updateCart);
- cartRouter.delete("/removeFromCart/:id",authMiddleware,removeFromCart);
+ cartRouter.post("/addToCart",authmiddleware, addToCart);
+ cartRouter.get("/getCart",authmiddleware,getCart);
+ cartRouter.put("/updateCart/:id",authmiddleware,updateCart);
+ cartRouter.delete("/removeFromCart/:id",authmiddleware,removeFromCart);
 
 
  module.exports=cartRouter;

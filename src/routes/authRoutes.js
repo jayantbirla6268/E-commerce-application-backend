@@ -2,7 +2,7 @@
 
 const express=require("express");
 const {signup,login,profile,logout, refreshAccessToken,forgotPassword}=require("../controllers/authcontroller")
-const authMiddleware=require("../middlerware/authMiddleware");
+const authmiddleware=require("../middlerware/authMiddleware");
 const addProduct  =require("../controllers/productcontroller")
 const loginLimiter=require("../middlerware/rateLimiter")
 //const forgotPassword=require("../controllers/authcontroller");
@@ -13,9 +13,9 @@ const authRouter= express.Router();
 
 authRouter.post("/signup",signup);
 
-authRouter.post("/login",loginLimiter, login);
+authRouter.post("/login", login);//loginlimiter
 
-authRouter.get("/profile",authMiddleware,profile);
+authRouter.get("/profile",authmiddleware,profile);
 
 authRouter.post("/logout",logout);
 
