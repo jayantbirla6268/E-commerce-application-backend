@@ -62,6 +62,7 @@ const redisClient = require("../config/redis");
         //     return res.status(200).json(JSON.parse(cachedProducts));
 
         // }
+        //
 
         const products= await Product.find({
             ...keyword,
