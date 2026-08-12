@@ -10,6 +10,7 @@ const authMiddleware=require("../middlerware/authMiddleware");
 const {sendEmail} = require("../utiils/emailServices");
 const welcomeEmail = require("../templates/welcomeEmail");
 const crypto = require("crypto");
+const { trusted } = require("mongoose");
 
 const signup=async(req,res)=>{
   try{
@@ -216,103 +217,162 @@ const logout = async (req, res) => {
 
 //generate refresh access token
 
+// const refreshAccessToken = async (req, res) => {
+
+//     try {
+
+//         const refreshToken = req.cookies.refreshToken;
+
+//         if (!refreshToken) {
+
+//             return res.status(401).json({
+
+//                 success: false,
+
+//                 message: "Refresh Token Missing"
+
+//             });
+
+//         }
+
+//         const decoded = jwt.verify(
+
+//             refreshToken,
+
+//             process.env.REFRESH_TOKEN_SECRET
+
+//         );
+
+//         const user = await User.findById(decoded.id);
+
+//         if (!user) {
+
+//             return res.status(404).json({
+
+//                 success: false,
+
+//                 message: "User Not Found"
+
+//             });
+
+//         }
+// console.log("Cookie Token:", refreshToken);
+
+// console.log("DB Token:", user.refreshToken);
+//         if (user.refreshToken !== refreshToken) {
+
+//             return res.status(401).json({
+
+//                 success: false,
+
+//                 message: "Invalid Refresh Token"
+
+//             });
+
+//         }
+
+//         const accessToken = generateAccessToken(user._id);
+
+//         res.cookie(
+
+//             "Token",
+
+//             accessToken,
+
+//             {
+
+//                 httpOnly: true,
+
+//                 secure: trusted,
+
+//                 sameSite: "lax",
+
+//                 maxAge: 15 * 60 * 1000
+
+//             }
+
+//         );
+
+//         res.status(200).json({
+
+//             success: true,
+
+//             message: "New Access Token Generated"
+
+//         });
+
+//     } catch (error) {
+
+//         res.status(401).json({
+
+//             success: false,
+
+//             message: error.message
+
+//         });
+
+//     }
+
+// };
+
+//generate refresh token
 const refreshAccessToken = async (req, res) => {
-
     try {
-
         const refreshToken = req.cookies.refreshToken;
 
         if (!refreshToken) {
-
             return res.status(401).json({
-
                 success: false,
-
                 message: "Refresh Token Missing"
-
             });
-
         }
 
         const decoded = jwt.verify(
-
             refreshToken,
-
             process.env.REFRESH_TOKEN_SECRET
-
         );
 
         const user = await User.findById(decoded.id);
 
         if (!user) {
-
             return res.status(404).json({
-
                 success: false,
-
                 message: "User Not Found"
-
             });
-
         }
-console.log("Cookie Token:", refreshToken);
 
-console.log("DB Token:", user.refreshToken);
+        console.log("Cookie Token:", refreshToken);
+        console.log("DB Token:", user.refreshToken);
+
         if (user.refreshToken !== refreshToken) {
-
             return res.status(401).json({
-
                 success: false,
-
                 message: "Invalid Refresh Token"
-
             });
-
         }
 
         const accessToken = generateAccessToken(user._id);
 
-        res.cookie(
+        res.cookie("token", accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 15 * 60 * 1000
+        });
 
-            "accessToken",
-
-            accessToken,
-
-            {
-
-                httpOnly: true,
-
-                secure: false,
-
-                sameSite: "lax",
-
-                maxAge: 15 * 60 * 1000
-
-            }
-
-        );
-
-        res.status(200).json({
-
+        return res.status(200).json({
             success: true,
-
             message: "New Access Token Generated"
-
         });
 
     } catch (error) {
-
-        res.status(401).json({
-
+        return res.status(401).json({
             success: false,
-
             message: error.message
-
         });
-
     }
-
 };
+
 
 //forgot password
 
