@@ -97,7 +97,8 @@ await user.save();
         sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000
          });
-
+console.log("ACCESS TOKEN:", accessToken);
+console.log("REFRESH TOKEN:", refreshToken);
         return res.status(200).json({
             success: true,
             message: "Login successful",
@@ -185,6 +186,8 @@ const logout = async (req, res) => {
     });
 }
 
+
+ 
         res.clearCookie("accessToken");
 
         res.clearCookie("refreshToken");
@@ -216,105 +219,6 @@ const logout = async (req, res) => {
 };
 
 //generate refresh access token
-
-// const refreshAccessToken = async (req, res) => {
-
-//     try {
-
-//         const refreshToken = req.cookies.refreshToken;
-
-//         if (!refreshToken) {
-
-//             return res.status(401).json({
-
-//                 success: false,
-
-//                 message: "Refresh Token Missing"
-
-//             });
-
-//         }
-
-//         const decoded = jwt.verify(
-
-//             refreshToken,
-
-//             process.env.REFRESH_TOKEN_SECRET
-
-//         );
-
-//         const user = await User.findById(decoded.id);
-
-//         if (!user) {
-
-//             return res.status(404).json({
-
-//                 success: false,
-
-//                 message: "User Not Found"
-
-//             });
-
-//         }
-// console.log("Cookie Token:", refreshToken);
-
-// console.log("DB Token:", user.refreshToken);
-//         if (user.refreshToken !== refreshToken) {
-
-//             return res.status(401).json({
-
-//                 success: false,
-
-//                 message: "Invalid Refresh Token"
-
-//             });
-
-//         }
-
-//         const accessToken = generateAccessToken(user._id);
-
-//         res.cookie(
-
-//             "Token",
-
-//             accessToken,
-
-//             {
-
-//                 httpOnly: true,
-
-//                 secure: trusted,
-
-//                 sameSite: "lax",
-
-//                 maxAge: 15 * 60 * 1000
-
-//             }
-
-//         );
-
-//         res.status(200).json({
-
-//             success: true,
-
-//             message: "New Access Token Generated"
-
-//         });
-
-//     } catch (error) {
-
-//         res.status(401).json({
-
-//             success: false,
-
-//             message: error.message
-
-//         });
-
-//     }
-
-// };
-
 //generate refresh token
 const refreshAccessToken = async (req, res) => {
     try {

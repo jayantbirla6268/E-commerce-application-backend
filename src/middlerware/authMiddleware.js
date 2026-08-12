@@ -4,7 +4,7 @@ const User = require("../model/user");
 const authmiddleware = async (req, res, next) => {
     try {
   
-        const token=req.cookies.token;
+        const token=req.cookies.accessToken;
          
     
        
