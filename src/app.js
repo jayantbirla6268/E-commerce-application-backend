@@ -39,12 +39,13 @@ const couponRouter = require("./routes/couponRouter");
       cors({
         origin: [
             "http://localhost:5173",
-             "https://e-commerce-application-frontend-eight.vercel.app/"
+            
             ],
         credentials: true
     }),
 );
-
+ 
+//  "https://e-commerce-application-frontend-eight.vercel.app/"
 
 
     // routes
